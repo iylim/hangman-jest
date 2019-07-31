@@ -23,7 +23,8 @@ function randomlySelectWord(words) {
  * @param {number} length length of target word
  * @returns {string[]}
  */
-function createBlankWordArray(length) {
+function createBlankWordArray(length = 0) {
+  if (typeof length !== 'number') return [];
   return new Array(length).fill('_');
 }
 
