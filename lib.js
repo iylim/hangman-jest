@@ -35,9 +35,7 @@ function createBlankWordArray(length) {
  * @returns {string[]}
  */
 function fillInGuessedLetters(guessedLetter, guessedWord, targetWord) {
-  return guessedWord.map((char, i) =>
-    guessedLetter === targetWord[i] ? guessedLetter : char
-  );
+  return guessedWord.map((char, i) => guessedLetter === targetWord[i] ? guessedLetter : char);
 }
 
 /**
