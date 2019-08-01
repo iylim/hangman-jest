@@ -59,6 +59,15 @@ function wordIncludesLetter(word, letter) {
 }
 
 /**
+ * Checks if input is valid
+ * @param {string} input 
+ */
+function validateInput(input) {
+  if (typeof input !== 'string' || input[0].search(/[A-Z]/i) === -1) throw Error('Invalid Input');
+  return input[0];
+}
+
+/**
  * Uses `readline-sync` library to ask for user input from command line
  * @returns {string} the inputted string
  */
@@ -83,4 +92,5 @@ module.exports = {
   stringify,
   askForALetter,
   wordIncludesLetter,
+  validateInput,
 };

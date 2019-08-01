@@ -1,5 +1,5 @@
 const readLineSync = require('readline-sync');
-const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord, askForALetter } = require('./lib');
+const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord, askForALetter, validateInput, } = require('./lib');
 
 describe('stringify', () => {
   // x skips f focus
@@ -117,8 +117,8 @@ describe('print', () => {
 
 describe('randomlySelectWord', () => {
   // Math.random = jest.fn(() => 0.5);
-  Math.random = jest.fn().mockReturnValue(0.5);
   it('should return the middle word', () => {
+    Math.random = jest.fn().mockReturnValue(0.5);
     const result = randomlySelectWord(['first', 'second', 'third']);
     expect(result).toBe('second');
   });
@@ -141,5 +141,38 @@ describe('askForALetter', () => {
     readLineSync.question.mockReturnValueOnce('a');
     const result = askForALetter();
     expect(result).toBe('a');
+  });
+});
+
+describe('validateInput', () => {
+  it('should only return a single letter when a single letter is passed in', () => {
+    const result = validateInput('a');
+    expect(result).toBe('a');
+  });
+
+  it('should return first character if it receives a string', () => {
+    const result = validateInput('string');
+    expect(result).toBe('s');
+  });
+
+  it('should throw an error with message of "Invalid Input" if it recieves a number', () => {
+    expect.assertions(2);
+    try {
+      validateInput(2);
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+      expect(err.message).toBe('Invalid Input');
+    }
+  });
+  it.todo('should throw an error if it recieves an object');
+
+  it('should throw an error with message of "Invalid Input" if it recieves input of undefined', () => {
+    expect(() => validateInput()).toThrow('Invalid Input');
+  });
+
+  it('should throw an error with message of "Invalid Input" if it recieves a non-letter character', () => {
+    expect(() => validateInput('2')).toThrow('Invalid Input');
+    expect(() => validateInput('.')).toThrow('Invalid Input');
+    expect(() => validateInput('.a')).toThrow('Invalid Input');
   });
 });
